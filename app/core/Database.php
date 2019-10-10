@@ -1,4 +1,4 @@
-<?php
+<?php  
 
 class Database {
 	private $host = DB_HOST;
@@ -6,7 +6,7 @@ class Database {
 	private $pass = DB_PASS;
 	private $db_name = DB_NAME;
 
-	PRIVATE $dbh;
+	private $dbh;
 	private $stmt;
 
 	public function __construct()
@@ -16,19 +16,20 @@ class Database {
 
 		$option = [
 			PDO::ATTR_PERSISTENT => true,
-			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+			PDO::ATTR_ERRMODE =>PDO::ERRMODE_EXCEPTION
 		];
 
 		try{
-			$this->dbh = new PDO($dsn, $this->user, $this->pass, $option);
-		} catch(PDOException $e){
+			$this->dbh = new PDO($dsn, $this->user,$this->pass, $option);
+		} catch(PDOException $e) {
 			die($e->getMessage());
 		}
 	}
 
-	public function query($query){
-		$this->stmt = $this->dbh->prepare($query);
-	}
+	public function query($query)
+		{
+			$this->stmt = $this->dbh->prepare($query);
+		}
 
 	public function bind($param, $value, $type = null)
 	{
@@ -44,11 +45,10 @@ class Database {
 					$type = PDO::PARAM_NULL;
 					break;
 				default :
-					$type = PDO::PARAM_STR;			}
+					$type = PDO::PARAM_STR;
+			}
 		}
-
 		$this->stmt->bindValue($param, $value, $type);
-
 	}
 
 	public function execute()
